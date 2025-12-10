@@ -17,7 +17,7 @@ local lazyConfig = {
   install = { colorscheme = { "catppuccin" } },
   git = {
     log = { "-5" }, -- show the last 5 commits
-    timeout = 120,  -- kill processes that take more than 2 minutes
+    timeout = 1200,
     url_format = "https://github.com/%s.git",
     -- lazy.nvim requires git >=2.19.0. If you really want to use lazy with an older version,
     -- then set the below to false. This should work, but is NOT supported and will
