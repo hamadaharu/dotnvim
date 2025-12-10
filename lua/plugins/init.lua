@@ -4,11 +4,6 @@ return {
   -- 'Jezda1337/nvim-html-css',
 
   -- Helper & Tools
-  {
-    "dstein64/vim-startuptime",
-    event = "VeryLazy",
-    cmd = "StartupTime",
-  },
 
   -- "NeogitOrg/neogit",
   -- "mbbill/undotree",
