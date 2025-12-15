@@ -38,6 +38,7 @@ return {
 	-- extra appearance
 	{
 		"xiyaowong/transparent.nvim",
+        event = { "VeryLazy" },
 		config = function()
 			require("transparent").setup({ -- Optional, you don't have to run setup.
 				groups = { -- table: default groups

@@ -36,9 +36,9 @@ require("catppuccin").setup({
     frappe = {},
     macchiato = {},
     mocha = {
-      base = "#232529",
-      mantle = "#1c1e21",
-      crust = "#2b2b2b",
+      base = "#161d2f",
+      mantle = "#111929",
+      crust = "#1e273a",
     },
   },
   custom_highlights = {},
