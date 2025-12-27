@@ -1,5 +1,6 @@
 return {
 	"christoomey/vim-tmux-navigator",
+    ft = { "toggleterm" },
 	cmd = {
 		"TmuxNavigateLeft",
 		"TmuxNavigateDown",
@@ -14,4 +15,10 @@ return {
 		{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
 		{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 	},
+    config = function()
+		vim.keymap.set("t", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", {})
+		vim.keymap.set("t", "<c-j>", "<cmd>TmuxNavigateDown<cr>", {})
+		vim.keymap.set("t", "<c-k>", "<cmd>TmuxNavigateUp<cr>", {})
+		vim.keymap.set("t", "<c-l>", "<cmd>TmuxNavigateRight<cr>", {})
+    end
 }
