@@ -40,17 +40,6 @@ return {
       -- lsp kind
       'onsails/lspkind.nvim',
       
-      -- tailwindcss-colorizer-cmp
-      {
-        "roobert/tailwindcss-colorizer-cmp.nvim",
-        -- optionally, override the default options:
-        config = function()
-          require("tailwindcss-colorizer-cmp").setup({
-            color_square_width = 2,
-          })
-        end
-      },
-
       -- tailwind to css 
       "jcha0713/cmp-tw2css",
 
