@@ -4,13 +4,6 @@ return {
     ft = "markdown", -- or 'event = "VeryLazy"'
     dependencies = {
       {
-        "bullets-vim/bullets.vim",
-        config = function()
-          vim.g.bullets_enabled_file_types = { 'markdown', 'text', 'gitcommit', 'scratch' }
-          vim.cmd([[let g:bullets_set_mappings = 0]])
-        end
-      },
-      {
         "Myzel394/easytables.nvim",
         config = true
       }
