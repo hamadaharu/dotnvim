@@ -31,9 +31,16 @@ local servers = {
         capabilities = capabilities,
     },
     cssls = {
+        filetypes = { "css", "less" },
+        capabilities = capabilities,
+    },
+    somesass_ls = {
         capabilities = capabilities,
     },
     ts_ls = {
+        capabilities = capabilities,
+    },
+    svelte = {
         capabilities = capabilities,
     },
     tailwindcss = {
@@ -60,7 +67,7 @@ local servers = {
         capabilities = capabilities,
     },
     emmet_language_server = {
-        filetypes = { "astro", "blade", "css", "eruby", "html", "htmldjango", "javascriptreact", "less", "pug", "sass", "scss", "svelte", "typescriptreact", "vue", "htmlangular", "php", "htmlhugo" },
+        filetypes = { "astro", "blade", "css", "eruby", "html", "htmldjango", "javascriptreact", "less", "pug", "sass", "scss", "svelte", "typescriptreact", "vue", "htmlangular", "php", "htmlhugo", "markdown" },
         capabilities = capabilities,
     },
     -- Go Language Server
@@ -96,7 +103,19 @@ local servers = {
     pylsp =  {
         capabilities = capabilities,
     },
+    -- C and Arduino
     clangd = {
+        capabilities = capabilities,
+    },
+    arduino_language_server = {
+        capabilities = capabilities,
+    },
+    -- Java
+    jdtls = {
+        capabilities = capabilities,
+    },
+    -- Typst
+    tinymist = {
         capabilities = capabilities,
     }
 }
