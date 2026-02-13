@@ -11,6 +11,12 @@ local capabilities = cmp_nvim_lsp.default_capabilities()
 local capabilitiesHtml = vim.lsp.protocol.make_client_capabilities()
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+-- Set Fold Capabilities
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+
 local servers = {
     -- Webdev Language Servers
     html = {
@@ -32,6 +38,9 @@ local servers = {
     },
     cssls = {
         filetypes = { "css", "less" },
+        capabilities = capabilities,
+    },
+    css_variables = {
         capabilities = capabilities,
     },
     somesass_ls = {
