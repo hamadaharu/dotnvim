@@ -117,6 +117,25 @@ local servers = {
     -- Typst
     tinymist = {
         capabilities = capabilities,
+    },
+    -- Yaml
+    yamlls = {
+        capabilities = capabilities,
+        settings = {
+            yaml = {
+                schemas = {
+                    ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                    [vim.fn.expand("~/.config/nvim/.schemas/hugo.json")] = {
+                        "hugo.yaml",
+                        "config.yaml",
+                        "config/_default/*.yaml"
+                    },
+                    [vim.fn.expand("~/.config/nvim/.schemas/sveltia-cms.json")] = {
+                        "static/admin/*.yml"
+                    },
+                },
+            },
+        }
     }
 }
 
