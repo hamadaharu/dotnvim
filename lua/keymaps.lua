@@ -29,11 +29,21 @@ map("i", "<Up>", "<C-o>gk", opt)
 map("n", "j", "gj", opt)
 map("n", "k", "gk", opt)
 
+-- Quick Fix Navigate
+opt.desc = "Next Quick Fix"
+map("n", "<leader>.", "<CMD>cn<CR>", opt)
+opt.desc = "Prev Quick Fix"
+map("n", "<leader>,", "<CMD>cp<CR>", opt)
+
 -- Php Arrow
 opt.desc = "php ->"
 map("i", "-.", "->", opt)
 opt.desc = "php =>"
 map("i", "=.", "=>", opt)
+
+-- Html to Css
+opt.desc = "Extract HTML classes to CSS"
+map("v", "<leader>css", require"utils.html-to-css", opt)
 
 -- Go short declaration
 opt.desc = "go :="
@@ -45,7 +55,11 @@ map("n", "s", ":w<CR>", opt)
 
 -- Buffer Toggle 
 opt.desc = "Toggle Last 2 Buffer"
-map("n", "<leader><Tab>", ":b#<CR>", opt)
+map("n", "<leader><leader>", ":b#<CR>", opt)
+
+-- Close All Buffer
+opt.desc = "Close All Buffer"
+map("n", "<leader>bd", "<CMD>%bd<CR>", opt)
 
 -- insert navigation
 -- map("i", "<C-k>", "<Up>", opt1)
