@@ -19,7 +19,7 @@ return {
     opts = {
       server = {
         override = false, -- setup the server from the plugin if true
-        settings = { -- shortcut for `settings.tailwindCSS`
+        settings = {      -- shortcut for `settings.tailwindCSS`
           -- experimental = {
           --   classRegex = { "tw\\('([^']*)'\\)" }
           -- },
@@ -29,7 +29,7 @@ return {
           -- },
         },
         on_attach = function(client, bufnr) end, -- callback executed when the language server gets attached to a buffer
-        root_dir = function(fname) end, -- overrides the default function for resolving the root directory
+        root_dir = function(fname) end,          -- overrides the default function for resolving the root directory
       },
       document_color = {
         enabled = true, -- can be toggled by commands

@@ -27,8 +27,8 @@ o.splitbelow = true         -- Split on bellow
 o.exrc = true               -- Source dir config
 -- o.nowrap = true
 o.foldlevel = 20
-o.foldmethod = "expr"
-o.foldexpr = "nvim_treesitter#foldexpr()"
+-- o.foldmethod = "expr"
+-- o.foldexpr = "nvim_treesitter#foldexpr()"
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

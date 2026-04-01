@@ -2,8 +2,8 @@ return {
 	"romgrk/barbar.nvim",
 	lazy = true,
 	dependencies = {
-		"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
-		"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+		"lewis6991/gitsigns.nvim",
+		"nvim-tree/nvim-web-devicons",
 	},
 	init = function()
 		vim.g.barbar_auto_setup = false
@@ -29,7 +29,7 @@ return {
 
 			-- Excludes buffers from the tabline
 			exclude_ft = { "mysql" },
-			exclude_name = { "package.json" },
+			exclude_name = { "package.json", "undotree_2" },
 
 			-- A buffer to this direction will be focused (if it exists) when closing the current buffer.
 			-- Valid options are 'left' (the default), 'previous', and 'right'
@@ -96,7 +96,7 @@ return {
 
 			-- If true, new buffers will be inserted at the start/end of the list.
 			-- Default is to insert after current buffer.
-			insert_at_end = true,
+			insert_at_end = false,
 			insert_at_start = false,
 
 			-- Sets the maximum padding width with which to surround each tab
@@ -159,16 +159,16 @@ return {
 		map("n", "<A-<>", "<Cmd>BufferMovePrevious<CR>", opts)
 		map("n", "<A->>", "<Cmd>BufferMoveNext<CR>", opts)
 		-- Goto buffer in position...
-		map("n", "<A-1>", "<Cmd>BufferGoto 1<CR>", opts)
-		map("n", "<A-2>", "<Cmd>BufferGoto 2<CR>", opts)
-		map("n", "<A-3>", "<Cmd>BufferGoto 3<CR>", opts)
-		map("n", "<A-4>", "<Cmd>BufferGoto 4<CR>", opts)
-		map("n", "<A-5>", "<Cmd>BufferGoto 5<CR>", opts)
-		map("n", "<A-6>", "<Cmd>BufferGoto 6<CR>", opts)
-		map("n", "<A-7>", "<Cmd>BufferGoto 7<CR>", opts)
-		map("n", "<A-8>", "<Cmd>BufferGoto 8<CR>", opts)
-		map("n", "<A-9>", "<Cmd>BufferGoto 9<CR>", opts)
-		map("n", "<A-0>", "<Cmd>BufferLast<CR>", opts)
+		-- map("n", "<A-1>", "<Cmd>BufferGoto 1<CR>", opts)
+		-- map("n", "<A-2>", "<Cmd>BufferGoto 2<CR>", opts)
+		-- map("n", "<A-3>", "<Cmd>BufferGoto 3<CR>", opts)
+		-- map("n", "<A-4>", "<Cmd>BufferGoto 4<CR>", opts)
+		-- map("n", "<A-5>", "<Cmd>BufferGoto 5<CR>", opts)
+		-- map("n", "<A-6>", "<Cmd>BufferGoto 6<CR>", opts)
+		-- map("n", "<A-7>", "<Cmd>BufferGoto 7<CR>", opts)
+		-- map("n", "<A-8>", "<Cmd>BufferGoto 8<CR>", opts)
+		-- map("n", "<A-9>", "<Cmd>BufferGoto 9<CR>", opts)
+		-- map("n", "<A-0>", "<Cmd>BufferLast<CR>", opts)
 		-- Pin/unpin buffer
 		map("n", "<A-p>", "<Cmd>BufferPin<CR>", opts)
 		-- Close buffer

@@ -3,7 +3,7 @@ return {
 	lazy = true,
 	cmd = "ASToggle",
 	keys = {
-		{ "<leader>n" },
+		{ "<leader>as" },
 	},
 	config = function()
 		require("auto-save").setup({
@@ -21,6 +21,6 @@ return {
 			write_all_buffers = true, -- write all buffers when the current one meets `condition`
 			debounce_delay = 2200, -- saves the file at most every `debounce_delay` milliseconds
 		})
-		vim.api.nvim_set_keymap("n", "<leader>n", ":ASToggle<CR>", {})
+		vim.api.nvim_set_keymap("n", "<leader>s", ":ASToggle<CR>", {})
 	end,
 }
