@@ -9,7 +9,7 @@ return {
 		vim.g.barbar_auto_setup = false
 	end,
 	version = "^1.0.0", -- optional: only update when a new 1.x version is released
-	event = { "BufAdd", "tabnew" },
+	-- event = { "BufAdd", "tabnew" },
 	config = function()
 		require("barbar").setup({
 			-- Enable/disable animations
