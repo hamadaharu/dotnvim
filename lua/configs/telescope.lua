@@ -1,5 +1,8 @@
 require("telescope").load_extension("persisted")
 
+local openQuickFix = require"utils.telescope-quick-fix-open"
+local h_utils = require"utils.harpoon-telescope"
+
 require("telescope").setup({
   defaults = {
     prompt_prefix = "   ",
@@ -20,6 +23,18 @@ require("telescope").setup({
     },
     file_ignore_patterns = {
       "^node_modules/"
+    },
+    mappings = {
+      n = {
+        ["q"] = "close",
+        ["<C-o>"] = openQuickFix,
+        ["<leader>a"] = function(pb) h_utils.add_to_harpoon(pb, false) end,
+        ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end,
+      },
+      i = {
+        ["<C-o>"] = openQuickFix,
+        ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end
+      }
     }
   },
   pickers = {
@@ -33,6 +48,19 @@ require("telescope").setup({
     find_files = {
       theme = "dropdown",
     },
+    buffers = {
+      show_all_buffers = true,
+      sort_lastused = true,
+      previewer = false,
+      mappings = {
+        n = {
+          ["<M-c>"] = "delete_buffer"
+        },
+        i = {
+          ["<M-c>"] = "delete_buffer"
+        }
+      }
+    }
   },
   extensions = {
     -- Your extension configuration goes here:
