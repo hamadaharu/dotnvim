@@ -39,3 +39,8 @@ luac.out
 *.x86_64
 *.hex
 
+# Lsp Local Servers
+lua/configs/lsp/local_servers.lua
+
+# Playground
+lua/playground.lua

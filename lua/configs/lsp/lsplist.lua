@@ -1,15 +1,8 @@
--- import lsp config
-local lspconfig = require("lspconfig")
-
 -- import cmp-nvim-lsp plugin
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 -- used to enable autocompletion (umm)
 local capabilities = cmp_nvim_lsp.default_capabilities()
-
---Enable (broadcasting) snippet capability for completion
-local capabilitiesHtml = vim.lsp.protocol.make_client_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Set Fold Capabilities
 capabilities.textDocument.foldingRange = {
@@ -17,15 +10,13 @@ capabilities.textDocument.foldingRange = {
     lineFoldingOnly = true
 }
 
-local servers = {
+local servers_config = {
     -- Webdev Language Servers
     html = {
         filetypes = { "html", "php", "blade", "htmlhugo" },
-        supersaian = true,
         init_options = {
             provideFormatter = true
         },
-        capabilities = capabilities,
         settings = {
             suggest = {
                 paths = false, -- Disable path autocomplete
@@ -34,28 +25,13 @@ local servers = {
     },
     eslint = {
         autostart = false,
-        capabilities = capabilities,
     },
     cssls = {
         filetypes = { "css", "less" },
-        capabilities = capabilities,
-    },
-    css_variables = {
-        capabilities = capabilities,
-    },
-    somesass_ls = {
-        capabilities = capabilities,
-    },
-    ts_ls = {
-        capabilities = capabilities,
-    },
-    svelte = {
-        capabilities = capabilities,
     },
     tailwindcss = {
         autostart = false,
         filetypes = { "html", "php", "blade", "htmlhugo" },
-        capabilities = capabilities,
         settings = {
             tailwindCSS = {
                 classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
@@ -68,28 +44,17 @@ local servers = {
                     templ = "html",
                     htmlhugo = "html"
                 },
-                validate = true
+                validate = true,
+                colorDecorators = false,
+                hovers = false,
+                suggestions = true, -- Tetap nyalakan autocomplete
             }
         }
     },
-    intelephense = {
-        capabilities = capabilities,
-    },
     emmet_language_server = {
         filetypes = { "astro", "blade", "css", "eruby", "html", "htmldjango", "javascriptreact", "less", "pug", "sass", "scss", "svelte", "typescriptreact", "vue", "htmlangular", "php", "htmlhugo", "markdown" },
-        capabilities = capabilities,
     },
-    -- Go Language Server
-    gopls = {
-        capabilities = capabilities
-    },
-    -- Sqls
-    sqls = {
-        capabilities = capabilities,
-    },
-    -- lua
     lua_ls = {
-        capabilities = capabilities,
         settings = {
             Lua = {
                 runtime = {
@@ -108,28 +73,7 @@ local servers = {
             },
         },
     },
-    -- python
-    pylsp =  {
-        capabilities = capabilities,
-    },
-    -- C and Arduino
-    clangd = {
-        capabilities = capabilities,
-    },
-    arduino_language_server = {
-        capabilities = capabilities,
-    },
-    -- Java
-    jdtls = {
-        capabilities = capabilities,
-    },
-    -- Typst
-    tinymist = {
-        capabilities = capabilities,
-    },
-    -- Yaml
     yamlls = {
-        capabilities = capabilities,
         settings = {
             yaml = {
                 schemas = {
@@ -148,6 +92,12 @@ local servers = {
     }
 }
 
+local ok, servers = pcall(require, "configs.lsp.local_servers")
+
+if not ok then
+    servers = {}
+end
+
 local function is_installed(name)
     local custom_executables = vim.lsp.config[name].cmd[1]
     local executable = custom_executables or name
@@ -155,20 +105,17 @@ local function is_installed(name)
     return vim.fn.executable(executable) == 1
 end
 
-for lsp, config in pairs(servers) do
-    if is_installed(lsp) then
+for _, lsp_name in pairs(servers) do
+    if is_installed(lsp_name) then
         -- Default
-        if config == true then
-            vim.lsp.config[lsp] = {
-                capabilities = capabilities
-            }
-        elseif type(config) == 'table' then
-            vim.lsp.config[lsp] = config
-        end
+        local config = servers_config[lsp_name] or {}
+
+        config.capabilities = config.capabilities or capabilities
+
+        vim.lsp.config[lsp_name] = config
+
         if config.autostart or config.autostart == nil then
-            vim.lsp.enable(lsp)
+            vim.lsp.enable(lsp_name)
         end
-    else
-        vim.notify(string.format("[LSP] %s tidak terinstall", lsp), vim.log.levels.WARN)
     end
 end
