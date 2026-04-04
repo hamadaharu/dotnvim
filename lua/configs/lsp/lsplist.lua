@@ -99,13 +99,23 @@ if not ok then
 end
 
 local function is_installed(name)
-    local custom_executables = vim.lsp.config[name].cmd[1]
-    local executable = custom_executables or name
+    local executable = name
+
+    local config = vim.lsp.config[name]
+
+    if config and config.cmd then
+        if type(config.cmd) == "table" then
+            executable = config.cmd[1]
+        elseif type(config.cmd) == "string" then
+            executable = config.cmd
+        end
+    end
 
     return vim.fn.executable(executable) == 1
 end
 
-for _, lsp_name in pairs(servers) do
+
+for _, lsp_name in ipairs(servers) do
     if is_installed(lsp_name) then
         -- Default
         local config = servers_config[lsp_name] or {}
