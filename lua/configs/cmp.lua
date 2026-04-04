@@ -38,19 +38,19 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
-    { name = "html-css" },
-    { name = 'nvim_lsp' },
-    { name = "cmp-tw2css" },
+    { name = 'nvim_lsp', keyword_length = 2 },
+    { name = 'luasnip', keyword_length = 2 },
+    -- { name = "cmp-tw2css" },
     { name = 'calc' },
-    { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
     {
       name = 'buffer',
+      keyword_length = 3,
       option = {
         get_bufnrs = function()
           local bufs = {}
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.fn.buflisted(buf) == 1 then
+            local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+            if byte_size < 1024 * 1024 then
               table.insert(bufs, buf)
             end
           end
@@ -59,8 +59,6 @@ cmp.setup({
       }
     },
     { name = 'path' },
-    -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'snippy' }, -- For snippy users.
   }),
   performance = {
     debounce = 150,
@@ -83,7 +81,7 @@ cmp.setup({
 
       -- The function below will be called before any actual modifications from lspkind
       -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      before =  require("tailwind-tools.cmp").lspkind_format
+      -- before =  require("tailwind-tools.cmp").lspkind_format
     }),
     -- format = require("tailwindcss-colorizer-cmp").formatter,
   },
