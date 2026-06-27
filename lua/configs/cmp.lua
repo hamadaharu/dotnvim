@@ -97,7 +97,7 @@ cmp.setup({
   })
 )
 equire("cmp_git").setup() ]]-- 
-cmp.setup.filetype('sql', {
+cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
   sources = cmp.config.sources({
     { name = 'luasnip' },
     { name = 'vim-dadbod-completion' },
