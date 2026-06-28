@@ -1,26 +1,18 @@
 return {
-    {
-        "edluffy/hologram.nvim",
-        enabled = false,
+    "3rd/image.nvim",
+    build = false,
+    ft = {
+        "md",
+        "markdown",
+        "markdown_inline"
     },
-    {
-        "3rd/image.nvim",
-        dependencies = {
-            {
-                "vhyrro/luarocks.nvim",
-                priority = 1001, -- this plugin needs to run before anything else
-                opts = {
-                    rocks = { "magick" },
-                },
-            },
-        },
-        ft = {
-            -- "md",
-            -- "markdown",
-            -- "markdown_inline"
-        },
-        config = function()
-            -- ...
-        end,
-    },
+    opts = {
+        processor = "magick_cli",
+        integrations = {
+            markdown = {
+                only_render_image_at_cursor = true,
+                only_render_image_at_cursor_mode = "popup", -- "popup" or "inline"
+            }
+        }
+    }
 }
