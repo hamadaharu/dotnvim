@@ -1,23 +1,20 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   event = { "BufReadPost", "BufNewFile" },
   cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo", "TSUpdate" },
   build = ":TSUpdate",
-  dependencies = {
-    "HiPhish/nvim-ts-rainbow2",
-  },
+  init = function()
+    vim.api.nvim_create_autocmd('FileType', {
+      callback = function() 
+        -- Enable treesitter highlighting and disable regex syntax
+        pcall(vim.treesitter.start)
+        -- Enable treesitter-based indentation
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end,
+    })
+  end,
   config = function()
-    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-    parser_config.blade = {
-      install_info = {
-        url = "https://github.com/EmranMR/tree-sitter-blade",
-        files = { "src/parser.c" },
-        branch = "main",
-      },
-      filetype = "blade"
-    }
-
     require("configs.treesitter")
   end,
 }
