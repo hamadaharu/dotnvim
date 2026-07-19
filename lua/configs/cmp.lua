@@ -1,6 +1,7 @@
 -- Set up nvim-cmp.
 local cmp = require 'cmp'
 
+
 -- load vscode style snippets
 require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/snippets/codium" })
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -42,6 +43,7 @@ cmp.setup({
     { name = 'luasnip', keyword_length = 2 },
     -- { name = "cmp-tw2css" },
     { name = 'calc' },
+
     {
       name = 'buffer',
       keyword_length = 3,
@@ -58,6 +60,21 @@ cmp.setup({
         end
       }
     },
+    -- Itteratife Scan Buffer
+    -- {
+    --   name = 'buffer',
+    --   option = {
+    --     get_bufnrs = function()
+    --       local bufs = {}
+    --       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    --         if vim.fn.buflisted(buf) == 1 then
+    --           table.insert(bufs, buf)
+    --         end
+    --       end
+    --       return bufs
+    --     end
+    --   }
+    -- },
     { name = 'path' },
   }),
   performance = {

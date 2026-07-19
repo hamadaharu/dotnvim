@@ -8,6 +8,12 @@ local keymap = vim.keymap
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = "LSP action",
   callback = function(ev)
+    -- DISABLE SEMANTIC TOKENS
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client then
+        client.server_capabilities.semanticTokensProvider = nil
+    end
+
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local opts = { buffer = ev.buf, silent = true }
@@ -50,7 +56,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
     opts.desc = "Format file"
-    keymap.set("n", "<leader>fm", "<CMD>lua vim.lsp.buf.format()<CR>", opts) -- show definition, references
+    keymap.set({ "n", "x" }, "<leader>fm", vim.lsp.buf.format, opts) -- show definition, references
 
     opts.desc = "Restart LSP"
     keymap.set("n", "<leader>rs", "<CMD>LspRestart<CR>", opts) -- mapping to restart lsp if necessary

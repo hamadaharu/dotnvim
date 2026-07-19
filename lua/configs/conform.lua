@@ -29,6 +29,11 @@ conform.setup({
     typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     yaml = { "yamlfix" },
   },
+  -- format_on_save = {
+  --   -- I recommend these options. See :help conform.format for details.
+  --   lsp_format = "fallback",
+  --   timeout_ms = 1000,
+  -- },
 })
 
 vim.keymap.set({ "n", "v" }, "<leader>l", function()

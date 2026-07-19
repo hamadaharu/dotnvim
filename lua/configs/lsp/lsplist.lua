@@ -31,7 +31,7 @@ local servers_config = {
     },
     tailwindcss = {
         autostart = false,
-        filetypes = { "html", "php", "blade", "htmlhugo" },
+        filetypes = { "html", "php", "blade", "htmlhugo", "astro" },
         settings = {
             tailwindCSS = {
                 classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
@@ -48,6 +48,42 @@ local servers_config = {
                 colorDecorators = false,
                 hovers = false,
                 suggestions = true, -- Tetap nyalakan autocomplete
+            }
+        }
+    },
+    astro = {
+        autostart = false,
+        flags = {
+            debounce_text_changes = 1000,
+        },
+        init_options = {
+            typescript = {
+                tsdk = vim.fn.trim(vim.fn.system('echo $HOME')) ..
+                    '/.local/share/pnpm/global/5/node_modules/typescript/lib'
+            }
+        }
+    },
+    svelte = {
+        flags = {
+            debounce_text_changes = 1000,
+        },
+
+        on_attach = function(client, bufnr)
+            client.server_capabilities.semanticTokensProvider = nil
+        end,
+    },
+    intelephense = {
+        settings = {
+            intelephense = {
+                stubs = {
+                    "bcmath", "bz2", "calendar", "Core", "curl", "date", "dba", "dom", "enchant", "fileinfo", "filter",
+                    "ftp", "gd", "gettext", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring",
+                    "mcrypt", "mysql", "mysqli", "password", "pcntl", "pcre", "PDO", "pdo_mysql", "Phar", "readline",
+                    "recode", "Reflection", "regex", "session", "SimpleXML", "soap", "sockets", "sodium", "SPL",
+                    "standard", "superglobals", "sysvsem", "sysvshm", "tokenizer", "xml", "xdebug", "xmlreader", "xmlrpc",
+                    "xmlwriter", "xsl", "Zend OPcache", "zip", "zlib",
+                    "wordpress",
+                },
             }
         }
     },
@@ -98,34 +134,17 @@ if not ok then
     servers = {}
 end
 
-local function is_installed(name)
-    local executable = name
-
-    local config = vim.lsp.config[name]
-
-    if config and config.cmd then
-        if type(config.cmd) == "table" then
-            executable = config.cmd[1]
-        elseif type(config.cmd) == "string" then
-            executable = config.cmd
-        end
-    end
-
-    return vim.fn.executable(executable) == 1
-end
-
-
 for _, lsp_name in ipairs(servers) do
-    if is_installed(lsp_name) then
-        -- Default
-        local config = servers_config[lsp_name] or {}
+    -- Default
+    local config = servers_config[lsp_name] or {}
 
-        config.capabilities = config.capabilities or capabilities
+    config.capabilities = config.capabilities or capabilities
+    config.flags = config.flags or {}
+    config.flags.debounce_text_changes = config.flags.debounce_text_changes or 300
 
-        vim.lsp.config[lsp_name] = config
+    vim.lsp.config[lsp_name] = config
 
-        if config.autostart or config.autostart == nil then
-            vim.lsp.enable(lsp_name)
-        end
+    if config.autostart or config.autostart == nil then
+        vim.lsp.enable(lsp_name)
     end
 end
