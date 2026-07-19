@@ -37,7 +37,24 @@ return {
                     -- Prefix text and highlight to show to the left of file system entry
                     prefix = nil,
                     -- Order in which to show file system entries
-                    sort = nil,
+                    sort = function(fs_entries)
+                        local res = vim.deepcopy(fs_entries)
+
+                        table.sort(res, function(a, b)
+                            local a_is_dir = a.fs_type == "directory"
+                            local b_is_dir = b.fs_type == "directory"
+
+                            if a_is_dir ~= b_is_dir then return a_is_dir end
+
+                            local name_a, name_b = a.name:lower(), b.name:lower()
+                            if name_a == name_b then return false end
+
+                            return name_a:gsub("(%d+)", function(n) return string.format("%10d", n) end) <
+                                name_b:gsub("(%d+)", function(n) return string.format("%10d", n) end)
+                        end)
+
+                        return res
+                    end,
                 },
 
                 -- Module mappings created only inside explorer.

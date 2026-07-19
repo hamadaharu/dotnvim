@@ -1,5 +1,6 @@
 return {
 	"christoomey/vim-tmux-navigator",
+    enabled = false,
     ft = { "toggleterm" },
 	cmd = {
 		"TmuxNavigateLeft",
