@@ -1,7 +1,4 @@
-require("telescope").load_extension("persisted")
-
 local openQuickFix = require"utils.telescope-quick-fix-open"
-local h_utils = require"utils.harpoon-telescope"
 
 require("telescope").setup({
   defaults = {
@@ -28,12 +25,9 @@ require("telescope").setup({
       n = {
         ["q"] = "close",
         ["<C-o>"] = openQuickFix,
-        ["<leader>a"] = function(pb) h_utils.add_to_harpoon(pb, false) end,
-        ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end,
       },
       i = {
         ["<C-o>"] = openQuickFix,
-        ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end
       }
     }
   },
@@ -62,16 +56,7 @@ require("telescope").setup({
       }
     }
   },
-  extensions = {
-    -- Your extension configuration goes here:
-    -- extension_name = {
-    --   extension_config_key = value,
-    -- }
-    -- please take a look at the readme of the extension you want to configure
-    persisted = {
-      layout_config = { width = 0.55, height = 0.55 }
-    }
-  },
+  extensions = {},
 })
 
 -- UI

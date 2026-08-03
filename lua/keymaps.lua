@@ -42,9 +42,7 @@ map("i", "-.", "->", opt)
 opt.desc = "php =>"
 map("i", "=.", "=>", opt)
 
--- Html to Css
-opt.desc = "Extract HTML classes to CSS"
-map("v", "<leader>css", require"utils.html-to-css", opt)
+
 
 -- Go short declaration
 opt.desc = "go :="
