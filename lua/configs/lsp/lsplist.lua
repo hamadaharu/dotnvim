@@ -136,8 +136,12 @@ for lsp_name, _ in pairs(servers_config) do
     local is_installed = false
     local server_def = vim.lsp.config and vim.lsp.config[lsp_name]
     if server_def and server_def.cmd then
-        local cmd = server_def.cmd[1]
-        if vim.fn.executable(cmd) == 1 then
+        if type(server_def.cmd) == "table" then
+            local cmd = server_def.cmd[1]
+            if type(cmd) == "string" and vim.fn.executable(cmd) == 1 then
+                is_installed = true
+            end
+        elseif type(server_def.cmd) == "function" then
             is_installed = true
         end
     end
