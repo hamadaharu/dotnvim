@@ -128,13 +128,42 @@ local servers_config = {
     }
 }
 
-local ok, servers = pcall(require, "configs.lsp.local_servers")
+local active_servers = {}
+local seen = {}
 
-if not ok then
-    servers = {}
+-- 1. Auto-detect from servers_config keys if the executable is present
+for lsp_name, _ in pairs(servers_config) do
+    local is_installed = false
+    local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
+    if lspconfig_ok and lspconfig[lsp_name] then
+        local def_config = lspconfig[lsp_name].document_config and lspconfig[lsp_name].document_config.default_config
+        if def_config and def_config.cmd then
+            local cmd = def_config.cmd[1]
+            if vim.fn.executable(cmd) == 1 then
+                is_installed = true
+            end
+        end
+    end
+
+    if is_installed then
+        table.insert(active_servers, lsp_name)
+        seen[lsp_name] = true
+    end
 end
 
-for _, lsp_name in ipairs(servers) do
+-- 2. Add from local_servers.lua if it exists
+local ok, local_servers = pcall(require, "configs.lsp.local_servers")
+if ok and type(local_servers) == "table" then
+    for _, lsp_name in ipairs(local_servers) do
+        if not seen[lsp_name] then
+            table.insert(active_servers, lsp_name)
+            seen[lsp_name] = true
+        end
+    end
+end
+
+-- 3. Configure and enable active servers
+for _, lsp_name in ipairs(active_servers) do
     -- Default
     local config = servers_config[lsp_name] or {}
 
