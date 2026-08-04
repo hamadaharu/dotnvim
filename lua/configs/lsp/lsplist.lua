@@ -134,14 +134,11 @@ local seen = {}
 -- 1. Auto-detect from servers_config keys if the executable is present
 for lsp_name, _ in pairs(servers_config) do
     local is_installed = false
-    local lspconfig_ok, lspconfig = pcall(require, "lspconfig")
-    if lspconfig_ok and lspconfig[lsp_name] then
-        local def_config = lspconfig[lsp_name].document_config and lspconfig[lsp_name].document_config.default_config
-        if def_config and def_config.cmd then
-            local cmd = def_config.cmd[1]
-            if vim.fn.executable(cmd) == 1 then
-                is_installed = true
-            end
+    local server_def = vim.lsp.config and vim.lsp.config[lsp_name]
+    if server_def and server_def.cmd then
+        local cmd = server_def.cmd[1]
+        if vim.fn.executable(cmd) == 1 then
+            is_installed = true
         end
     end
 
