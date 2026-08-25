@@ -12,6 +12,7 @@ return {
   },
   keys = {
     { "<F8>", "<CMD>DBUIToggle<CR>", mode = { "n" }, desc = "DBUI Toggle" },
+    { "<leader><F8>", "<CMD>DBUIFindBuffer<CR>", mode = { "n" }, desc = "DBUI Toggle" },
     { "<F9>", "<Plug>(DBUI_ExecuteQuery)", mode = { "n" }, desc = "DBUI exec" },
     { "<F9>", "db#op_exec()", expr = true, mode = { "x" }, desc = "DBUI exec" },
     { "<A-r>", "<Plug>(DBUI_ExecuteQuery)", mode = { "n" }, desc = "DBUI exec" },
