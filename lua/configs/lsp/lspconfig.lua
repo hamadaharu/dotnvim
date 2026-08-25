@@ -64,3 +64,134 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 require("configs.lsp.lsplist")
+
+local function get_all_lsp_servers()
+  local files = vim.api.nvim_get_runtime_file("lua/lspconfig/configs/*.lua", true)
+  local names = {}
+  for _, file in ipairs(files) do
+    local normalized = file:gsub("\\", "/")
+    local name = normalized:match("([^/]+)%.lua$")
+    if name then
+      table.insert(names, name)
+    end
+  end
+  table.sort(names)
+  return names
+end
+
+vim.api.nvim_create_user_command("LspEnable", function(opts)
+  local lsp_name = opts.args
+  if lsp_name == "" then
+    vim.notify("Usage: :LspEnable <server_name>", vim.log.levels.ERROR)
+    return
+  end
+
+  local path = vim.fn.stdpath("config") .. "/lua/configs/lsp/local_servers.lua"
+  
+  package.loaded["configs.lsp.local_servers"] = nil
+  local ok, local_servers = pcall(require, "configs.lsp.local_servers")
+  local servers_list = {}
+  if ok and type(local_servers) == "table" then
+    servers_list = vim.deepcopy(local_servers)
+  end
+
+  local exists = false
+  for _, v in ipairs(servers_list) do
+    if v == lsp_name then
+      exists = true
+      break
+    end
+  end
+
+  if not exists then
+    table.insert(servers_list, lsp_name)
+    local content = "return {\n"
+    for _, name in ipairs(servers_list) do
+      content = content .. '  "' .. name .. '",\n'
+    end
+    content = content .. "}\n"
+    
+    local f = io.open(path, "w")
+    if f then
+      f:write(content)
+      f:close()
+      package.loaded["configs.lsp.local_servers"] = nil
+      vim.notify("Enabled and added " .. lsp_name .. " to local_servers.lua!", vim.log.levels.INFO)
+      
+      package.loaded["configs.lsp.lsplist"] = nil
+      pcall(require, "configs.lsp.lsplist")
+    else
+      vim.notify("Could not write to local_servers.lua", vim.log.levels.ERROR)
+    end
+  else
+    vim.notify(lsp_name .. " is already enabled.", vim.log.levels.WARN)
+  end
+end, {
+  nargs = 1,
+  complete = function(ArgLead, CmdLine, CursorPos)
+    local servers = get_all_lsp_servers()
+    return vim.tbl_filter(function(val)
+      return val:match("^" .. vim.pesc(ArgLead))
+    end, servers)
+  end,
+})
+
+vim.api.nvim_create_user_command("LspDisable", function(opts)
+  local lsp_name = opts.args
+  if lsp_name == "" then
+    vim.notify("Usage: :LspDisable <server_name>", vim.log.levels.ERROR)
+    return
+  end
+
+  local path = vim.fn.stdpath("config") .. "/lua/configs/lsp/local_servers.lua"
+  
+  package.loaded["configs.lsp.local_servers"] = nil
+  local ok, local_servers = pcall(require, "configs.lsp.local_servers")
+  if not ok or type(local_servers) ~= "table" then
+    vim.notify("No local_servers.lua file found or invalid format.", vim.log.levels.ERROR)
+    return
+  end
+
+  local new_list = {}
+  local found = false
+  for _, v in ipairs(local_servers) do
+    if v == lsp_name then
+      found = true
+    else
+      table.insert(new_list, v)
+    end
+  end
+
+  if found then
+    local content = "return {\n"
+    for _, name in ipairs(new_list) do
+      content = content .. '  "' .. name .. '",\n'
+    end
+    content = content .. "}\n"
+    
+    local f = io.open(path, "w")
+    if f then
+      f:write(content)
+      f:close()
+      package.loaded["configs.lsp.local_servers"] = nil
+      vim.notify("Disabled and removed " .. lsp_name .. " from local_servers.lua!", vim.log.levels.INFO)
+      vim.notify("Please restart Neovim to fully unload the server.", vim.log.levels.WARN)
+    else
+      vim.notify("Could not write to local_servers.lua", vim.log.levels.ERROR)
+    end
+  else
+    vim.notify(lsp_name .. " is not enabled.", vim.log.levels.WARN)
+  end
+end, {
+  nargs = 1,
+  complete = function(ArgLead, CmdLine, CursorPos)
+    package.loaded["configs.lsp.local_servers"] = nil
+    local ok, local_servers = pcall(require, "configs.lsp.local_servers")
+    if ok and type(local_servers) == "table" then
+      return vim.tbl_filter(function(val)
+        return val:match("^" .. vim.pesc(ArgLead))
+      end, local_servers)
+    end
+    return {}
+  end,
+})
