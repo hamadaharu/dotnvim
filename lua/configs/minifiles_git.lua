@@ -76,12 +76,21 @@ end
 ---@return nil
 local function updateMiniWithGit(buf_id, gitStatusMap)
   vim.schedule(function()
+    if not vim.api.nvim_buf_is_valid(buf_id) then
+      return
+    end
     local nlines = vim.api.nvim_buf_line_count(buf_id)
     local cwd = vim.fs.root(buf_id, ".git")
-    local escapedcwd = cwd and vim.pesc(cwd)
+    if not cwd then
+      return
+    end
+    local escapedcwd = vim.pesc(cwd)
     escapedcwd = vim.fs.normalize(escapedcwd)
 
     for i = 1, nlines do
+      if not vim.api.nvim_buf_is_valid(buf_id) then
+        return
+      end
       local entry = MiniFiles.get_fs_entry(buf_id, i)
       if not entry then
         break
@@ -97,21 +106,24 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
           priority = 2,
         })
         -- This below code is responsible for coloring the text of the items. comment it out if you don't want that
-        local line = vim.api.nvim_buf_get_lines(buf_id, i - 1, i, false)[1]
-        -- Find the name position accounting for potential icons
-        local nameStartCol = line:find(vim.pesc(entry.name)) or 0
-        
-        if nameStartCol > 0 then
-          vim.api.nvim_buf_set_extmark(
-            buf_id,
-            nsMiniFiles,
-            i - 1,
-            nameStartCol - 1,
-            {
-              end_col = nameStartCol + #entry.name - 1,
-              hl_group = hlGroup,
-            }
-          )
+        local lines = vim.api.nvim_buf_get_lines(buf_id, i - 1, i, false)
+        local line = lines and lines[1]
+        if line then
+          -- Find the name position accounting for potential icons
+          local nameStartCol = line:find(vim.pesc(entry.name)) or 0
+
+          if nameStartCol > 0 then
+            vim.api.nvim_buf_set_extmark(
+              buf_id,
+              nsMiniFiles,
+              i - 1,
+              nameStartCol - 1,
+              {
+                end_col = nameStartCol + #entry.name - 1,
+                hl_group = hlGroup,
+              }
+            )
+          end
         end
 
       else
@@ -159,10 +171,13 @@ end
 ---@param buf_id integer
 ---@return nil
 local function updateGitStatus(buf_id)
-  if not vim.fs.root(buf_id, ".git") then
+  if not vim.api.nvim_buf_is_valid(buf_id) then
     return
   end
   local cwd = vim.fs.root(buf_id, ".git")
+  if not cwd then
+    return
+  end
   -- local cwd = vim.fn.expand("%:p:h")
   local currentTime = os.time()
 
