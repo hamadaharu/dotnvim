@@ -62,6 +62,10 @@ map("n", "<leader><leader>", ":b#<CR>", opt)
 opt.desc = "Close All Buffer"
 map("n", "<leader>bd", "<CMD>%bd<CR>", opt)
 
+-- Mouse keymaps
+map('n', '<S-ScrollWheelUp>', '<ScrollWheelLeft>', {})
+map('n', '<S-ScrollWheelDown>', '<ScrollWheelRight>', {})
+
 -- insert navigation
 -- map("i", "<C-k>", "<Up>", opt1)
 -- map("i", "<C-j>", "<Down>", opt1)
