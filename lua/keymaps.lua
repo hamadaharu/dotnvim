@@ -9,7 +9,6 @@ vim.g.mapleader = " "
 opt.desc = ""
 
 map("i", "jj", "<esc>", {})
-map("t", "jj", "<C-\\><C-n>", {})
 map({ "n", "v" }, ";", ":", {})
 -- quit
 map({ "n", "i", "v" }, "<C-q>", "<esc>:q<cr>", {

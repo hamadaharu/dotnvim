@@ -28,3 +28,14 @@ vim.api.nvim_create_autocmd("FileType", {
     end, { expr = true, silent = true, buffer = 0 })
   end
 })
+
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    local name = vim.api.nvim_buf_get_name(0)
+    -- If it's NOT a lazygit buffer, map 'jj' locally to escape terminal mode
+    if not name:match("lazygit") then
+      vim.keymap.set("t", "jj", "<C-\\><C-n>", { buffer = true, silent = true })
+    end
+  end,
+})
