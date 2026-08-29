@@ -84,8 +84,8 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
     if not cwd then
       return
     end
+    cwd = vim.fs.normalize(cwd)
     local escapedcwd = vim.pesc(cwd)
-    escapedcwd = vim.fs.normalize(escapedcwd)
 
     for i = 1, nlines do
       if not vim.api.nvim_buf_is_valid(buf_id) then
@@ -95,7 +95,8 @@ local function updateMiniWithGit(buf_id, gitStatusMap)
       if not entry then
         break
       end
-      local relativePath = entry.path:gsub("^" .. escapedcwd .. "/", "")
+      local normalized_path = vim.fs.normalize(entry.path)
+      local relativePath = normalized_path:gsub("^" .. escapedcwd .. "/", "")
       local status = gitStatusMap[relativePath]
 
       if status then
@@ -178,6 +179,7 @@ local function updateGitStatus(buf_id)
   if not cwd then
     return
   end
+  cwd = vim.fs.normalize(cwd)
   -- local cwd = vim.fn.expand("%:p:h")
   local currentTime = os.time()
 
@@ -230,8 +232,11 @@ autocmd("User", {
   callback = function(args)
     local bufnr = args.data.buf_id
     local cwd = vim.fs.root(bufnr, ".git")
-    if gitStatusCache[cwd] then
-      updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
+    if cwd then
+      cwd = vim.fs.normalize(cwd)
+      if gitStatusCache[cwd] then
+        updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
+      end
     end
   end,
 })
