@@ -11,6 +11,7 @@ return {
 		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help Tags", silent = true },
 		{ "<leader>fs", "<cmd>Telescope persisted<cr>", desc = "Persisted", silent = true },
 		{ "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Git Status", silent = true },
+		{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Git Branches", silent = true },
 	},
 	config = function()
 		require("configs.telescope")

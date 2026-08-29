@@ -60,6 +60,29 @@ require("telescope").setup({
           ["<M-c>"] = "delete_buffer"
         }
       }
+    },
+    git_branches = {
+      show_remote_tracking_branches = false,
+      mappings = {
+        i = {
+          ["<C-s>"] = function(prompt_bufnr)
+            local actions = require("telescope.actions")
+            local action_state = require("telescope.actions.state")
+            local selection = action_state.get_selected_entry()
+            actions.close(prompt_bufnr)
+            if selection then
+              local branch = selection.value
+              local output = vim.fn.system("git merge --squash " .. branch)
+              output = vim.fn.trim(output)
+              if output == "" then
+                vim.notify("Squash merge initiated for: " .. branch, vim.log.levels.INFO)
+              else
+                vim.notify(output, vim.log.levels.INFO)
+              end
+            end
+          end
+        }
+      }
     }
   },
   extensions = {
