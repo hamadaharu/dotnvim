@@ -87,6 +87,10 @@ map('n', '<S-ScrollWheelDown>', '<ScrollWheelRight>', {})
 -- end horizontal slide
 
 -- Vim Window Navigate
+map('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
+map('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
+map('n', '<C-k>', '<C-w>k', { desc = 'Move to top window' })
+map('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
 -- nnoremap <C-h> <C-w><C-h>
 -- nnoremap <C-l> <C-w><C-l>
 -- nnoremap <C-j> <C-w><C-j>
