@@ -15,9 +15,18 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
+        "ravitemer/codecompanion-history.nvim"
     },
     config = function()
         require("codecompanion").setup({
+            extensions = {
+                history = {
+                    enabled = true,
+                    opts = {
+                        dir_to_save = vim.fn.stdpath("data") .. "/codecompanion_chats.json",
+                    }
+                }
+            },
             adapters = {
                 http = {
                     groq = function()
@@ -81,12 +90,16 @@ return {
                             name = "Gemini",
                             schema = {
                                 model = {
-                                    default = "gemini-2.0-flash",
-                                    -- choices = {
-                                    --     "gemini-2.0-flash",
-                                    --     "gemini-1.5-pro",
-                                    --     "gemini-1.5-flash",
-                                    -- },
+                                    default = "gemini-3.5-flash-lite",
+                                    choices = {
+                                        "gemini-3.6-flash",
+                                        "gemini-3.5-flash",
+                                        "gemini-3.5-flash-lite",
+                                        "gemini-3.1-flash-lite",
+                                        "gemini-3.0-flash",
+                                        "gemini-2.5-flash",
+                                        "gemini-2.5-flash-lite",
+                                    },
                                 },
                             },
                         })
