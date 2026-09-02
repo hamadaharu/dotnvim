@@ -26,6 +26,12 @@ return {
             "## Completed\n",
           },
         },
+        mappings = {
+          ["H"] = "move_left",
+          ["J"] = "move_down",
+          ["K"] = "move_up",
+          ["L"] = "move_right",
+        }
       })
     end,
   }
