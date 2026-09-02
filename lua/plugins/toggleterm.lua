@@ -24,9 +24,9 @@ return {
 
       local float = Terminal:new({ direction = 'float' })
 
-      vim.keymap.set({"n", "t"}, '<leader>th', function() horizontal:toggle() end, { desc = "Toggle Term Horizontal" })
-      vim.keymap.set({"n", "t"}, '<leader>tv', function() vertical:toggle() end, { desc = "Toggle Term Vertical" })
-      vim.keymap.set({"n", "t"}, '<leader>tf', function() float:toggle() end, { desc = "Toggle Term Float" })
+      vim.keymap.set({"n"}, '<leader>th', function() horizontal:toggle() end, { desc = "Toggle Term Horizontal" })
+      vim.keymap.set({"n"}, '<leader>tv', function() vertical:toggle() end, { desc = "Toggle Term Vertical" })
+      vim.keymap.set({"n"}, '<leader>tf', function() float:toggle() end, { desc = "Toggle Term Float" })
     end,
   },
 
