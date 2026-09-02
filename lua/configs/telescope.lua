@@ -2,6 +2,7 @@ require("telescope").load_extension("persisted")
 
 local openQuickFix = require"utils.telescope-quick-fix-open"
 local h_utils = require"utils.harpoon-telescope"
+local actions = require("telescope.actions")
 
 require("telescope").setup({
   defaults = {
@@ -30,10 +31,12 @@ require("telescope").setup({
         ["<C-o>"] = openQuickFix,
         ["<leader>a"] = function(pb) h_utils.add_to_harpoon(pb, false) end,
         ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
       },
       i = {
         ["<C-o>"] = openQuickFix,
-        ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end
+        ["<M-a>"] = function(pb) h_utils.add_to_harpoon(pb, true) end,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
       }
     }
   },
