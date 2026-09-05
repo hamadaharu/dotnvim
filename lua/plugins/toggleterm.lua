@@ -24,9 +24,21 @@ return {
 
       local float = Terminal:new({ direction = 'float' })
 
+      local lazygit = Terminal:new({
+        cmd = "lazygit", 
+        hidden = true,
+        direction = "float",
+        close_on_exit = true,
+        on_open = function(term)
+          vim.cmd("startinsert!")
+          vim.keymap.set({"n", "t"}, "<M-j>", "<cmd>close<CR>", { buffer = term.bufnr, silent = true })
+        end,
+      })
+
       vim.keymap.set({"n"}, '<leader>th', function() horizontal:toggle() end, { desc = "Toggle Term Horizontal" })
       vim.keymap.set({"n"}, '<leader>tv', function() vertical:toggle() end, { desc = "Toggle Term Vertical" })
       vim.keymap.set({"n"}, '<leader>tf', function() float:toggle() end, { desc = "Toggle Term Float" })
+      vim.keymap.set({"n"}, '<leader>lg', function() lazygit:toggle() end, { desc = "Toggle LazyGit" })
     end,
   },
 
