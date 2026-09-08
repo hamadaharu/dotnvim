@@ -24,6 +24,7 @@ o.ttyfast = true            -- speed up scrolling
 o.sidescroll = 1            -- enable side scrolling
 o.so = 999                  -- cursor on center
 o.splitbelow = true         -- Split on bellow
+o.splitright = true         -- Split on right
 o.exrc = true               -- Source dir config
 -- o.nowrap = true
 o.foldlevel = 20
