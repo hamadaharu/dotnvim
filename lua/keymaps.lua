@@ -17,9 +17,11 @@ map({ "n", "i", "v" }, "<C-q>", "<esc>:q<cr>", {
 })
 
 -- TabNavigate
-map("n", "<A-[>", "<cmd>tabNext<CR>", opt)
-map("n", "<A-]>", "<cmd>tabnext<CR>", opt)
-map("n", "<A-S-t>", "<cmd>tabnew<CR>", opt)
+map({ "n", "t" }, "<A-[>", "<cmd>tabNext<CR>", opt)
+map({ "n", "t" }, "<A-]>", "<cmd>tabnext<CR>", opt)
+map("n", "<A-{>", "<cmd>-tabmove<CR>", opt)
+map("n", "<A-}>", "<cmd>+tabmove<CR>", opt)
+map("n", "<A-t>", "<cmd>tabnew<CR>", opt)
 
 -- Soft line navigate
 map("n", "<Down>", "gj", opt)
@@ -91,6 +93,12 @@ map('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
 map('n', '<C-j>', '<C-w>j', { desc = 'Move to bottom window' })
 map('n', '<C-k>', '<C-w>k', { desc = 'Move to top window' })
 map('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
+
+-- Terminal Navigate
+map('t', '<C-h>', [[<C-\><C-n><C-w>h]], { desc = 'Move to left window' })
+map('t', '<C-j>', [[<C-\><C-n><C-w>j]], { desc = 'Move to bottom window' })
+map('t', '<C-k>', [[<C-\><C-n><C-w>k]], { desc = 'Move to top window' })
+map('t', '<C-l>', [[<C-\><C-n><C-w>l]], { desc = 'Move to right window' })
 -- nnoremap <C-h> <C-w><C-h>
 -- nnoremap <C-l> <C-w><C-l>
 -- nnoremap <C-j> <C-w><C-j>
