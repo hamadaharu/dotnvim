@@ -48,6 +48,9 @@ vim.opt.signcolumn = "yes"
 
 o.laststatus = 3 -- just one status line pls
 
+-- Better Session
+o.sessionoptions = "buffers,curdir,folds,globals,tabpages,winsize,winpos"
+
 -- enable loader
 vim.loader.enable()
 

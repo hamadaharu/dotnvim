@@ -11,10 +11,10 @@ opt.desc = ""
 map("i", "jj", "<esc>", {})
 map({ "n", "v" }, ";", ":", {})
 -- quit
-map({ "n", "i", "v" }, "<C-q>", "<esc>:q<cr>", {
-	noremap = true,
-	silent = true,
-})
+-- map({ "n", "i", "v" }, "<C-q>", "<esc>:q<cr>", {
+-- 	noremap = true,
+-- 	silent = true,
+-- })
 
 -- TabNavigate
 map({ "n", "t" }, "<A-[>", "<cmd>tabNext<CR>", opt)
