@@ -1,3 +1,5 @@
+local omniroute_models = require("configs.omniroute_models")
+
 return {
     "olimorris/codecompanion.nvim",
     cmd = {
@@ -29,6 +31,21 @@ return {
             },
             adapters = {
                 http = {
+                    omniroute = function()
+                        return require("codecompanion.adapters").extend("openai",{
+                            env = {
+                                api_key = os.getenv("OMNIROUTE_API_KEY"),
+                            },
+                            name = "Omniroute",
+                            url = "http://localhost:20128/v1/chat/completions",
+                            schema = {
+                                model = {
+                                    default = "auto/coding:free",
+                                    choices = omniroute_models,
+                                },
+                            },
+                        })
+                    end,
                     groq = function()
                         return require("codecompanion.adapters").extend("openai", {
                             env = {
@@ -116,9 +133,9 @@ return {
                 },
             },
             strategies = {
-                chat = { adapter = "gemini" },
-                inline = { adapter = "gemini" },
-                agent = { adapter = "gemini" },
+                chat = { adapter = "omniroute" },
+                inline = { adapter = "omniroute" },
+                agent = { adapter = "omniroute" },
             },
         })
     end,
