@@ -39,9 +39,6 @@ return {
   },
   keys = { "<C-n>" },
   config = function()
-    -- start barbar
-    vim.cmd("Lazy load barbar.nvim")
-
     -- optionally enable 24-bit colour
     vim.opt.termguicolors = true
 

@@ -13,7 +13,7 @@ return {
 	config = function()
 		require("barbar").setup({
 			-- Enable/disable animations
-			animation = true,
+			animation = false,
 
 			-- Automatically hide the tabline when there are this many buffers left.
 			-- Set to any value >=0 to enable.
@@ -121,11 +121,11 @@ return {
 			sidebar_filetypes = {
 				-- Use the default values: {event = 'BufWinLeave', text = '', align = 'left'}
 				-- NvimTree = true,
-				NvimTree = {
-					align = "left",
-					event = "BufWipeout",
-					text = "",
-				},
+				-- NvimTree = {
+				-- 	align = "left",
+				-- 	event = "BufWipeout",
+				-- 	text = "",
+				-- },
 				-- Or, specify the text used for the offset:
 				-- undotree = {
 				-- 	text = "undotree",
