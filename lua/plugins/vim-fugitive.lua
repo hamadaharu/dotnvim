@@ -67,7 +67,6 @@ return {
                 -- Navigation in fugitive windows
                 vim.keymap.set("n", "q", "<CMD>q<CR>", { buffer = true, desc = "Close Fugitive" })
                 vim.keymap.set("n", "<CR>", "g<CR>", { buffer = true, desc = "Open file/expand" })
-                vim.keymap.set("n", "-", "g-", { buffer = true, desc = "Parent" })
                 
                 -- Staging operations
                 vim.keymap.set("n", "s", "s", { buffer = true, desc = "Stage file" })

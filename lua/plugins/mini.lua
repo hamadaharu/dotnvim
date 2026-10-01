@@ -148,9 +148,20 @@ return {
         config = function()
             local bufremove = require('mini.bufremove')
             local map = vim.keymap.set
-            map("n", "<C-q>", function()
+            map("n", "<M-c>", function()
                 bufremove.delete(0, false)
             end, { desc = "Delete Buffer" })
+            map("n", "<C-q>", function()
+                local buf = vim.api.nvim_get_current_buf()
+                if vim.wo.winfixbuf then
+                    vim.cmd('close')
+                else
+                    bufremove.delete(buf, false)
+                    if vim.fn.winnr('$') > 1 then
+                        vim.cmd('close')
+                    end
+                end
+            end, { desc = "Delete Buffer and Close Window" })
         end
     },
 }
